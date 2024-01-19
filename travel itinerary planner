@@ -1,0 +1,93 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Destination {
+    private String name;
+    private int duration; // in days
+
+    public Destination(String name, int duration) {
+        this.name = name;
+        this.duration = duration;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+}
+
+class TravelPlan {
+    private List<Destination> destinations = new ArrayList<>();
+    private String startDate;
+    private double budget;
+
+    public void addDestination(Destination destination) {
+        destinations.add(destination);
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
+    public void displayTravelPlan() {
+        System.out.println("Generated Travel Plan:");
+        System.out.println("Start Date: " + startDate);
+        System.out.println("Destinations:");
+        for (Destination destination : destinations) {
+            System.out.println(destination.getName() + " - " + destination.getDuration() + " days");
+        }
+        System.out.println("Total Budget: $" + budget);
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the Travel Itinerary Planner!");
+
+        // Collect user input for travel plan
+        TravelPlan travelPlan = new TravelPlan();
+
+        System.out.print("Enter the start date (MM/DD/YYYY): ");
+        String startDate = scanner.nextLine();
+        travelPlan.setStartDate(startDate);
+
+        System.out.print("Enter your total budget: $");
+        double budget = scanner.nextDouble();
+        travelPlan.setBudget(budget);
+
+        scanner.nextLine(); // Consume the newline character
+
+        System.out.print("Enter the number of destinations: ");
+        int numDestinations = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character
+
+        for (int i = 0; i < numDestinations; i++) {
+            System.out.print("Enter destination " + (i + 1) + " name: ");
+            String destinationName = scanner.nextLine();
+
+            System.out.print("Enter the duration of stay in days: ");
+            int duration = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            Destination destination = new Destination(destinationName, duration);
+            travelPlan.addDestination(destination);
+        }
+
+        // Display the generated travel plan
+        travelPlan.displayTravelPlan();
+
+        // Close the scanner
+        scanner.close();
+    }
+}
